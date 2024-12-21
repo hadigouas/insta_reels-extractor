@@ -16,9 +16,7 @@ router = APIRouter()
 
 
 def get_instagram_client(username: str, password: str):
-    """
-    Create and login to Instagram client
-    """
+
     try:
         client = Client()
         client.login(username, password)
@@ -28,12 +26,11 @@ def get_instagram_client(username: str, password: str):
             status_code=500,
             detail=f"Instagram login failed: {str(e)}"
         )
-
+        
+#test the login
 @router.post("/login")
 async def login(login_request: LoginRequest):
-    """
-    Login endpoint to handle Instagram authentication
-    """
+
     try:
         client = get_instagram_client(
             login_request.username,
@@ -45,10 +42,8 @@ async def login(login_request: LoginRequest):
     
     
 @router.get("/reels", response_model=List[ReelResponse])
-async def get_last_three_reels(username: str):
-    """
-    Fetch the last 3 Reels from a specified Instagram username
-    """
+async def get_last_reels(username: str):
+
     try:
         client = get_instagram_client(
             os.getenv('INSTAGRAM_USERNAME'),
